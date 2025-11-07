@@ -3,6 +3,8 @@ import { useDebouncedValue } from "../../hooks/useDebounceSearch";
 import { useEffect, useState, useRef } from "react";
 import { Search } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion"; 
+import { useCloseDropDown } from "../../hooks/useCloseDropDown";
+import { useMergedRefs } from "../../hooks/useMergeRefs";
 
 const SearchInput = () => {
   const query = useSearchStore((state) => state.query);
@@ -12,6 +14,8 @@ const SearchInput = () => {
 
   const [isFocused, setIsFocused] = useState(false); 
   const inputRef = useRef<HTMLInputElement>(null);
+  const closeRef = useCloseDropDown({ customFunction: () => setSuggestions([]) });
+  const containerRef = useMergedRefs(inputRef, closeRef);
 
   const debouncedQuery = useDebouncedValue(query, 300);
 
@@ -35,7 +39,7 @@ const SearchInput = () => {
   }, [debouncedQuery, setSuggestions]);
 
   return (
-    <div className="relative w-full md:w-80">
+    <div className="relative w-full md:w-80" ref={containerRef}>
       {/* Search input with icon */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -47,7 +51,7 @@ const SearchInput = () => {
           placeholder="Search..."
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 150)} 
-          className="w-full pl-10 border border-gray-200 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-gray-300 transition"
+          className="w-full pl-10 border border-gray-200 rounded-md p-1.5 focus:outline-none focus:ring-1 focus:ring-gray-300 transition"
         />
       </div>
 

@@ -1,6 +1,8 @@
 import logo from "../../assets/orderup_logo.png";
+import HelpDropdown from "./HelpDropdown";
 import MenuItems from "./MenuItems";
 import SearchInput from "./Search";
+import UserProfileDropdown from "../common/UserProfileDropdown";
 
 const Navbar = () => {
   return (
@@ -14,8 +16,10 @@ const Navbar = () => {
             <MenuItems/>
         </div>
         {/* right side */}
-        <div className="">
+        <div className="flex gap-2 items-center">
             <SearchInput/>
+            <HelpDropdown/>
+            <UserProfileDropdown/>
         </div>
       </nav>
     </header>
