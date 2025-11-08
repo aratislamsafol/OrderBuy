@@ -5,20 +5,20 @@ const MenuItems = () => {
   const { pathname } = useLocation();
 
   return (
-    <ul className="flex items-center gap-5">
+    <ul className="flex flex-col lg:flex-row lf:items-center gap-2 lg:gap-5 px-4 lg:px-0">
       {menuItems.map((item) => {
         const isActive = pathname === item.path;
         return (
           <li key={item.id}>
             <Link
               to={item.path}
-              className={`flex items-center gap-1 py-1 text-sm md:text-base transition-colors ${
+              className={`hover:bg-gray-100 py-2 lg:py:1 lg:hover:bg-transparent flex items-center gap-2 text-base lg:text-base transition-colors ${
                 isActive
                   ? "text-[#000FF] font-semibold"
                   : "text-gray-700 hover:text-[#8000FF]"
               }`}
             >
-              {item.label}
+              <p className="lg:hidden">{item.icon}</p> {item.label}
             </Link>
           </li>
         );
